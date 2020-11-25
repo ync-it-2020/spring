@@ -25,7 +25,12 @@
 	
 	<select id="getGameList" resultType="kr.ync.domain.GameListVO">
 	<![CDATA[
-		select * from gf_game order by appids 
+		select * from gf_game order by regdate DESC
+		]]>
+	</select>
+	<select id="getGameListInDetails" resultType="kr.ync.domain.GameListVO">
+	<![CDATA[
+		select * from (select * from gf_game order by regdate DESC) where rownum <= 6
 		]]>
 	</select>
 	

@@ -32,26 +32,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <%@include file="../front/header.jsp"%>
 <div class="contact-agileinfo">
 	<div class="container">
-		<h2>Login Page</h2>
+		<h2>Sign Up Page</h2>
 		<div class="col-md-4 contact-left-agile">
 			
 		</div>
 		<div class="contact-right-w3" style="display: inline-block;">
 			<form action="#" method="post">
-				<input type="text" class="text" name="Name" placeholder="ID" required="" style="width: 400px;">
-				<br/>
-				<input type="text" class="text" name="Phone" placeholder="Password" required="" style="width: 400px;">
-				<br/>
-				<div style="display: inline-block; padding-right: 5%;">
-					<input type="submit" class="login_btn" value="Login">
+				
+				<div class="agileits_reply">
+					<h3>Create your account</h3>
+					<form action="#" method="post">
+						<input type="text" name="ID" placeholder="ID" required>
+						<input type="text" name="Nickname" placeholder="Nickname" required>
+						<input type="text" name="Password" placeholder="Password" required>
+						<input type="text" name="Password_Check" placeholder="Password Check" required>
+						<input type="text" name="Name" placeholder="Name" required>
+						<input type="email" name="Email" placeholder="Email" required>
+						<textarea name="Profile" placeholder="Type your comment..."></textarea>
+						<input type="submit" value="submit">
+					</form>
 				</div>
 				
 			</form>
-			<div style="display: inline-block; padding-right: 5%;">
-				<input type="button" class="login_btn" value="Search PW">
-				<input type="button" class="login_btn" value="Search ID">
-				<input type="button" class="login_btn" value="Sign Up">
-			</div>
 		</div>
 		<div class="clearfix"></div>
 	</div>

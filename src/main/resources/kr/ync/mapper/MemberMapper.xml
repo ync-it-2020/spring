@@ -35,5 +35,28 @@
 	FROM	tbl_member
 	WHERE	userid = #{userid} 
 	</select>
+	
+	<!-- 추가 -->
+	<!--
+	<resultMap type="kr.ync.domain.SignupVO" id="signup">
+		<id property="member_id" column="member_id"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="nickname" column="nickname"/>
+		<result property="pw" column="pw"/>
+		<result property="profile" column="profile"/>
+		<result property="image" column="image"/>
+		<result property="regdate" column="regdate"/>
+		<collection property="authList" resultMap="authMap">
+		</collection>
+	</resultMap>
+	
+	<insert id="signup" resultMap="signup">
+	<![CDATA[
+	INSERT INTO gf_member (member_id, name, email, nickname, pw, profile, image, regdate, auth)
+	VALUES (#{member_id}, #{name}, #{email}, #{nickname}, #{pw}, #{profile}, #{image}, #{regdate}, 'ROLE_USER')
+	]]>
+	</insert>
+	-->
 
 </mapper>

@@ -117,6 +117,14 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getNews(content_idx);
 
 	}
+
+	@Override
+	public List<GameListVO> getGameListInDetails() {
+		// TODO Auto-generated method stub
+		log.info("getList..........");
+		
+		 return mapper.getGameListInDetails();
+	}
 	
 	
 }

@@ -9,6 +9,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.net.*" %>
+<%@ page import="java.lang.*" %>
+<%@ page import="org.json.simple.JSONArray" %>
+<%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="org.json.simple.JSONValue" %>
+<%@ page import="org.json.simple.parser.JSONParser" %>
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="org.json.simple.parser.ParseException" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,20 +50,145 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="../../../resources/front/js/jquery.min.js"></script>
 	<script src="../../../resources/front/js/bootstrap.js"></script>
 </head>
+<%! 
+	
+		int a; 
+		int b;
+		
+		public int sum(int a, int b) {
+		return a + b;
+		}
+		JSONObject jsonObj = new JSONObject();
+		
+	%>
+	<%
+		String appids = request.getParameter("appids");
+		//JSONObject inp = request.getParameter("param1");
+		String requestUrl = "https://store.steampowered.com/api/appdetails?appids=";
+		requestUrl += appids;
+		requestUrl += "&l=korean";
+		
+		
+		URL url = new URL(requestUrl);
 
+		InputStreamReader isr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8");
+
+		JSONObject object = (JSONObject)JSONValue.parse(isr);
+		
+		//JSONObject jsonObject = new JSONObject(requestUrl);
+		//out.println("object = " + object.get(appids));
+		
+		JSONObject object2 = (JSONObject)object.get(appids);
+		//out.println("object2 = " + object2);
+		
+		JSONObject object3 = (JSONObject)object2.get("data");
+		//out.println("object3 = " + object3);
+		
+		//out.println("object3 = " + object3.get("header_image"));
+		
+		JSONObject pcRequirement = (JSONObject)object3.get("pc_requirements");
+		//out.println(pcRequirement);
+		
+		JSONObject releaseDate = (JSONObject)object3.get("release_date");
+		//out.println(releaseDate);
+		
+		//JSONObject movies = (JSONObject)object2.get("movies");
+		//out.println("movies = " + movies);
+		
+		// 변수 목록
+		String name = (String)object3.get("name");
+		String header_image = (String)object3.get("header_image");
+		String about_the_game = (String)object3.get("about_the_game");
+		String short_description = (String)object3.get("short_description");
+		String detailed_description = (String)object3.get("detailed_description");
+		String background = (String)object3.get("background");
+		String pcMinimum = (String)pcRequirement.get("minimum");
+		String pcRecommended = (String)pcRequirement.get("recommended");
+		if (pcRecommended == null) 
+			pcRecommended = "&nbsp-";
+		String releaseDate_date = (String)releaseDate.get("date");
+		if (releaseDate_date == null) 
+			releaseDate_date = "&nbsp-";
+		
+		
+		// 카테고리 배열
+		ArrayList<String> categoryList = new ArrayList<String>();
+		JSONArray category_JSONArray = (JSONArray)object3.get("categories");
+		if (category_JSONArray != null) {
+			int len = category_JSONArray.size();
+			for (int i = 0; i < len; i++) {
+				JSONObject category = (JSONObject)category_JSONArray.get(i);
+				categoryList.add(category.get("description").toString());
+			}
+			/*
+			for (int i = 0; i < categoryList.size(); i++) {
+				out.println(categoryList.get(i));
+			}
+			*/
+		}
+		// 장르 배열
+		ArrayList<String> genreList = new ArrayList<String>();
+		JSONArray genres_JSONArray = (JSONArray)object3.get("genres");
+		if (genres_JSONArray != null) {
+			int len = genres_JSONArray.size();
+			for (int i = 0; i < len; i++) {
+				JSONObject genre = (JSONObject)genres_JSONArray.get(i);
+				genreList.add(genre.get("description").toString());
+			}
+			/*
+			for (int i = 0; i < genreList.size(); i++) {
+				out.println(genreList.get(i));
+			}
+			*/
+		}
+		
+		// 스크린샷 배열
+		ArrayList<String> screenshotList = new ArrayList<String>();
+		JSONArray screenshots_JSONArray = (JSONArray)object3.get("screenshots");
+		if (genres_JSONArray != null) {
+			int len = screenshots_JSONArray.size();
+			for (int i = 0; i < len; i++) {
+				JSONObject screenshot = (JSONObject)screenshots_JSONArray.get(i);
+				screenshotList.add(screenshot.get("path_full").toString());
+			}
+			/*
+			for (int i = 0; i < screenshotList.size(); i++) {
+				out.println(screenshotList.get(i));
+			}
+			*/
+			background = screenshotList.get(0);
+		}
+	%>
+<style>
+	.steam_background {
+		background-color: #1B2738;
+        background-repeat: no-repeat;
+        background-size: 100%;
+	}
+	.w3l_categories > strong {
+		display: none;
+	}
+	.wthree_blog_left_grid > img{
+		width: auto;
+	}
+	.bb_tag {
+		text-align: left;
+	}
+</style>
 <body>
 	<%@include file="../front/header.jsp"%>
 	<!-- breadcrumbs -->
-	<div class="agileits_breadcrumbs">
+	<div class="agileits_breadcrumbs" style="background-color: #1B2738;">
 		<div class="container">
 			<div class="agileits_breadcrumbs_left">
 				<ul>
-					<li><a href="/">Home</a><i>|</i></li>
-					<li>Single</li>
+					<li><a href="/">Home</a><i> |</i></li>
+					<li><a href="/front/gamelist">Games</a><i> |</i></li>
+					<li style="color: #fff"><%= name %></li>
 				</ul>
 			</div>
 			<div class="agileits_breadcrumbs_right">
-				<h3>Single</h3>
+				<h3></h3>
 			</div>
 			<div class="clearfix"> </div>
 		</div>
@@ -60,185 +196,117 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- //breadcrumbs -->
 	
 	<!-- single -->
-	<div class="blog">
-		<div class="container">
-			<div class="col-md-7 wthree_blog_left">
-				<div class="wthree_blog_left_grid">
-					<div class="wthree_blog_left_grid_slider">
-						<img src='<c:out value="${gamedetails.thumbnail }"/>' alt=" " class="img-responsive" />
+	<div class="steam_background">
+		<div class="blog">
+			<div class="container">
+				<div class="col-md-7 wthree_blog_left" >
+					<div class="wthree_blog_left_grid">
+						<div class="wthree_blog_left_grid_slider">
+							<img src='<%= header_image %>' alt=" " class="img-responsive" />
+						</div>
+						<h4><a href="https://store.steampowered.com/app/<%= appids %>" style="color: #e91e63"><c:out value="${gamedetails.gametitle }"/></a></h4>
+						
+						<ul>
+							<li><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a href="#"></a><i>|</i></li>
+							<li><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a href="#">20</a><i>|</i></li>
+							<li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#">5</a><i>|</i></li>
+							<li><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>publisher</li>
+						</ul>
+						<br /><br />
+						<h3 class="steam_short_description"><%= short_description %></h3>
+						<p>
+						<%= detailed_description %>
+						
+						</p><br /><br />
 					</div>
-					<h4><c:out value="${gamedetails.gametitle }"/></h4>
-					<h3>facilisis velit vitae gravida imperdiet</h3>
-					<ul>
-						<li><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a href="#">Jan Mark</a><i>|</i></li>
-						<li><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a href="#">20</a><i>|</i></li>
-						<li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#">5</a><i>|</i></li>
-						<li><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>Voluptatibus</li>
-					</ul>
-					<p>Duis venenatis, mi quis malesuada ultricies, nisi nisl posuere sapien,
-						id egestas lectus urna et massa. Morbi mauris turpis, posuere auctor auctor
-						ornare, auctor nec lectus. Class aptent taciti sociosqu ad litora torquent
-						per conubia nostra, per inceptos himenaeos.
-						<i>Nulla faucibus, arcu at consequat vulputate, turpis metus blandit urna,
-							quis suscipit orci nibh nec est. Phasellus tempus augue turpis. Fusce nec
-							tellus blandit, ullamcorper sapien vel, placerat erat. Nam non massa elit.
-							Morbi placerat molestie felis. Integer facilisis velit leo, vitae gravida
-							elit fringilla nec.</i>Quisque id nunc nec risus molestie aliquam.
-						Donec ex eros, lobortis et lorem quis, sagittis malesuada lectus.
-						Suspendisse ornare sed purus a imperdiet. Integer viverra nisi orci,
-						in volutpat leo ornare vitae.</p>
+					<div class="agileits_share">
+						<ul>
+							<li><a class="linkedin" href="#"></a></li>
+							<li><a class="google" href="#"></a></li>
+							<li><a class="twitter" href="#"></a></li>
+							<li><a class="facebook" href="#"></a></li>
+						</ul>
+					</div>
+	
+					<div class="agileits_reply">
+						<h3>요구 사양</h3>
+						<p></p>
+					</div>
 				</div>
-				<div class="agileits_share">
-					<ul>
-						<li><a class="linkedin" href="#"></a></li>
-						<li><a class="google" href="#"></a></li>
-						<li><a class="twitter" href="#"></a></li>
-						<li><a class="facebook" href="#"></a></li>
-					</ul>
+				<div class="col-md-5 wthree_blog_right">
+					<div class="w3ls_search">
+						<form action="#" method="post">
+							<input type="text" name="Search" placeholder="Search on our blog" required="">
+							<input type="submit" value=" ">
+						</form>
+					</div>
+					<div class="w3l_categories">
+						<h3>Genres</h3>
+						<ul>
+						<% 
+						for (int i = 0; i < genreList.size(); i++) {
+						%>
+						<li><a>
+						<%
+							out.println(genreList.get(i));
+						%>
+						</a></li>
+						<%
+						}
+						%>
+						</ul>
+					</div>
+	
+					<div class="w3l_categories"> <!-- w3l_archives -->
+						<h3>Categories</h3>
+						<ul>
+						<% 
+						for (int i = 0; i < categoryList.size(); i++) {
+						%>
+						<li><a>
+						<%
+							out.println(categoryList.get(i));
+						%>
+						</a></li>
+						<%
+						}
+						%>
+						</ul>
+					</div>
+					<div class="w3l_categories"> <!-- w3l_archives -->
+						<h3>최소 사양</h3>
+						<%=pcMinimum%>
+					</div>
+					<div class="w3l_categories"> <!-- w3l_archives -->
+						<h3>권장 사양</h3>
+						<%=pcRecommended%>
+					</div>
+					<div class="w3l_categories"> <!-- w3l_archives -->
+						<h3>Release Date</h3>
+						<ul>
+							<li><%=releaseDate_date%></li>
+						</ul>
+					</div>
+					<div class="w3agile_flickr_posts">
+						<h3>Latest Games</h3>
+						<c:forEach items="${gamelist}" var="gf_game">
+							<div class="w3agile_flickr_post_left" >
+								<a href='/front/gamedetails?appids=<c:out value="${gf_game.appids}"/>'>
+								<img src="${gf_game.thumbnail}" alt=" " class="img-responsive" 
+								style="width: 220px; height: 220px;  overflow: hidden; display: block;"/>
+								</a>
+							</div>
+						</c:forEach>
+						<div class="clearfix"> </div>
+					</div>
 				</div>
-
-				<div class="agileits_reply">
-					<h3>Leave a reply</h3>
-					<form action="#" method="post">
-						<input type="text" name="Name" placeholder="Name" required="">
-						<input type="email" name="Email" placeholder="Email" required="">
-						<input type="text" name="Subject" placeholder="Subject" required="">
-						<textarea name="Message" placeholder="Type your comment..." required=""></textarea>
-						<input type="submit" value="Submit">
-					</form>
-				</div>
+				<div class="clearfix"> </div>
 			</div>
-			<div class="col-md-5 wthree_blog_right">
-				<div class="w3ls_search">
-					<form action="#" method="post">
-						<input type="text" name="Search" placeholder="Search on our blog" required="">
-						<input type="submit" value=" ">
-					</form>
-				</div>
-				<div class="w3l_categories">
-					<h3>Categories</h3>
-					<ul>
-						<li><a href="single.html">Vitae gravida elit fringilla nec sociosqu</a></li>
-						<li><a href="single.html">Morbi mauris turpis, posuere auctor auctor</a></li>
-						<li><a href="single.html">Class aptent taciti sociosqu litora torquent</a></li>
-						<li><a href="single.html">Duis venenatis, mi quis malesuada ultricies</a></li>
-						<li><a href="single.html">Egestas lectus urna et massa morbi mauris</a></li>
-						<li><a href="single.html">Torquent conubia nostra inceptos himenaeos</a></li>
-						<li><a href="single.html">Urna et massa morbi mauris turpis, posuere</a></li>
-					</ul>
-				</div>
-
-				<div class="w3l_archives">
-					<h3>Archives</h3>
-					<ul>
-						<li>2 August 2017</li>
-						<li>14 August 2017</li>
-						<li>23 August 2017</li>
-						<li>8 September 2017</li>
-						<li>18 September 2017</li>
-					</ul>
-				</div>
-				<div class="w3agile_flickr_posts">
-					<h3>Flickr Posts</h3>
-					<div class="w3agile_flickr_post_left">
-						<a href="single.html"><img src="../../../resources/images/ng1.jpg" alt=" " class="img-responsive" /></a>
-					</div>
-					<div class="w3agile_flickr_post_left">
-						<a href="single.html"><img src="../../../resources/images/ng2.jpg" alt=" " class="img-responsive" /></a>
-					</div>
-					<div class="w3agile_flickr_post_left">
-						<a href="single.html"><img src="../../../resources/images/ng3.jpg" alt=" " class="img-responsive" /></a>
-					</div>
-					<div class="w3agile_flickr_post_left">
-						<a href="single.html"><img src="../../../resources/images/ng4.jpg" alt=" " class="img-responsive" /></a>
-					</div>
-					<div class="w3agile_flickr_post_left">
-						<a href="single.html"><img src="../../../resources/images/ng5.jpg" alt=" " class="img-responsive" /></a>
-					</div>
-					<div class="w3agile_flickr_post_left">
-						<a href="single.html"><img src="../../../resources/images/ng6.jpg" alt=" " class="img-responsive" /></a>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-			</div>
-			<div class="clearfix"> </div>
 		</div>
 	</div>
 	<!-- //single -->
 
-	<!-- footer -->
-	<div class="footer">
-		<div class="container">
-			<div class="col-md-3 footer-left-w3">
-				<h4>Contact</h4>
-				<ul>
-					<li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></li>
-					<li><a href="mailto:example@mail.com">
-							<h6>ex@mail.com</h6>
-						</a></li>
-				</ul>
-				<ul>
-					<li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></li>
-					<li>
-						<h6>+18045678834</h6>
-					</li>
-				</ul>
-				<ul>
-					<li><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></li>
-					<li>
-						<h6>4th Avenue,London</h6>
-					</li>
-				</ul>
-				<ul>
-					<li><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span></li>
-					<li>
-						<h6>(0033)6544 5453 644</h6>
-					</li>
-				</ul>
-			</div>
-			<div class="col-md-5 footer-middle-w3">
-				<h4>Latest Games</h4>
-				<div class="col-md-3 img-w3-agile">
-					<a href="single.html"><img src="../../../resources/images/ng1.jpg" alt=" " /></a>
-				</div>
-				<div class="col-md-3 img-w3-agile">
-					<a href="single.html"><img src="../../../resources/images/ng2.jpg" alt=" " /></a>
-				</div>
-				<div class="col-md-3 img-w3-agile">
-					<a href="single.html"><img src="../../../resources/images/ng3.jpg" alt=" " /></a>
-				</div>
-				<div class="col-md-3 img-w3-agile">
-					<a href="single.html"><img src="../../../resources/images/ng4.jpg" alt=" " /></a>
-				</div>
-				<div class="col-md-3 img-w3-agile footer-middle-wthree">
-					<a href="single.html"><img src="../../../resources/images/ng5.jpg" alt=" " /></a>
-				</div>
-				<div class="col-md-3 img-w3-agile footer-middle-wthree">
-					<a href="single.html"><img src="../../../resources/images/ng6.jpg" alt=" " /></a>
-				</div>
-				<div class="col-md-3 img-w3-agile footer-middle-wthree">
-					<a href="single.html"><img src="../../../resources/images/ng7.jpg" alt=" " /></a>
-				</div>
-				<div class="col-md-3 img-w3-agile footer-middle-wthree">
-					<a href="single.html"><img src="../../../resources/images/ng8.jpg" alt=" " /></a>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<div class="col-md-4 footer-right-w3">
-				<a href="/">
-					<h4>Games <img src="../../../resources/images/f1.png" alt=" " /> Zone</h4>
-				</a>
-				<p>Donec lobortis diam eu auctor porta. Phasellus in elementum tortor, sit amet imperdiet urna pellentesque non risus porta.</p>
-				<p class="agileinfo">Suspendisse convallis malesuada libero, non rutrum arcu pellentesque lacinia.</p>
-			</div>
-			<div class="clearfix"></div>
-			<div class="copyright">
-				<p>&copy; 2017 Games Zone. All Rights Reserved | Design by <a href="http://w3layouts.com/" target="_blank"> W3layouts </a></p>
-			</div>
-		</div>
-	</div>
-
-	<!-- //footer -->
+<%@include file="../front/footer.jsp"%>
 </body>
 
 </html>

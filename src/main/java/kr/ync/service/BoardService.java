@@ -34,6 +34,8 @@ public interface BoardService {
 	
 	public List<GameListVO> getGameList();
 	
+	public List<GameListVO> getGameListInDetails();
+	
 	public GameDetailsVO getGameDetails(Long appids);
 
 	public List<NewsListVO> getNewsList();

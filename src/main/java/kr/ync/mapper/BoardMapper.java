@@ -44,5 +44,7 @@ public interface BoardMapper {
 	public List<NewsListVO> getNewsList();
 
 	public NewsVO getNews(Long content_idx);
+
+	public List<GameListVO> getGameListInDetails();
 	
 }

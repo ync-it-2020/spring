@@ -18,7 +18,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="Games Zone Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-
+<!-- 
 	<script type="application/x-javascript">
 		addEventListener("load", function() {
 			setTimeout(hideURLbar, 0);
@@ -28,18 +28,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			window.scrollTo(0, 1);
 		}
 	</script>
-	<!-- css -->
+
 	<link href="../../../resources/front/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 	<link rel="stylesheet" href="../../../resources/front/css/flexslider.css" type="text/css" media="screen" property="" />
 	<link href="../../../resources/front/css/style.css" rel="stylesheet" type="text/css" media="all" />
-	<!-- css -->
-	<!-- font -->
+
 	<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,100,100italic,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-	<!-- //font -->
+
 	<script src="../../../resources/front/js/jquery.min.js"></script>
 	<script src="../../../resources/front/js/bootstrap.js"></script>
-
+ -->
 </head>
 
 <style>
@@ -57,23 +56,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<h4>Contact</h4>
 				<ul>
 					<li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></li>
-					<li><a href="mailto:example@mail.com">
-							<h6>ex@mail.com</h6>
+					<li><a href="mailto:dlsrks4597@gmail.com">
+							<h6>dlsrks4597@gmail.com</h6>
 						</a></li>
 				</ul>
 				<ul>
 					<li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></li>
 					<li>
-						<h6>+18045678834</h6>
+						<h6>+821045971575</h6>
 					</li>
 				</ul>
 				<ul>
 					<li><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></li>
 					<li>
-						<h6>4th Avenue,London</h6>
+						<h6>영남이공대학교</h6>
 					</li>
 				</ul>
-				<ul>
+				<ul style="opacity: 0%">
 					<li><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span></li>
 					<li>
 						<h6>(0033)6544 5453 644</h6>

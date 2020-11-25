@@ -1317,6 +1317,27 @@ a.blog-read:hover{
     border: 2px solid #FF166D;
 	background:#FF166D;
 }
+
+/*-- 추가 --*/
+
+.contact-right-w3 input.login_btn {
+    float: left;
+    padding: 7px 15px;
+    margin-right: 5px;
+    background-color: transparent;
+    border: 2px solid rgb(2, 24, 136);
+    outline: transparent;
+	color:rgb(2, 24, 136);
+}
+
+.contact-right-w3 input.login_btn:hover {
+	color: #FFf;
+    border: 2px solid #FF166D;
+	background:#FF166D;
+}
+
+/*-- //추가 --*/
+
  ::-webkit-input-placeholder{
 color:rgb(2, 24, 136) !important;
 }

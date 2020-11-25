@@ -46,8 +46,10 @@ public class SampleController {
 	
 	@GetMapping("gamedetails")
 	public void gamedetails(@RequestParam("appids") Long appids, Model model) {
+		log.info("gamelistInDetails");
 		log.info("gamedetails");
 		model.addAttribute("gamedetails", service.getGameDetails(appids));
+		model.addAttribute("gamelist", service.getGameListInDetails());
 	}
 	
 	@GetMapping("newslist")
@@ -68,7 +70,7 @@ public class SampleController {
 //		
 //	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("about")
 	public void about() {
 		
@@ -87,8 +89,13 @@ public class SampleController {
 	public void contact() {
 		
 	}
-	@GetMapping("login")
-	public void login() {
+//	@GetMapping("login")
+//	public void login() {
+//		
+//	}
+	
+	@GetMapping("signup")
+	public void signup() {
 		
 	}
 	
