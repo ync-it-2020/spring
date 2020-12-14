@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.ync.domain.SignupAuthVO;
 import kr.ync.domain.SignupVO;
 import kr.ync.mapper.MemberMapper;
 import lombok.extern.log4j.Log4j;
@@ -17,11 +18,19 @@ public class SignupServiceImpl implements SignupService {
     private MemberMapper mapper;
  
     @Override
-    public void insertMember(SignupVO member_id) {
+    public void signup(SignupVO signup) {
     	
-    	log.info("register......" + member_id);
+    	log.info("register......" + signup);
     	
-    	mapper.signup(member_id);
+    	mapper.signup(signup);
+    }
+    
+    @Override
+    public void signupAuth(SignupAuthVO signupAuth) {
+    	
+    	log.info("register......" + signupAuth);
+    	
+    	mapper.signupAuth(signupAuth);
     }
 }
 

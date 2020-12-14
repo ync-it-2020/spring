@@ -12,9 +12,10 @@ public class SignupVO {
 	private String name;
 	private String email;
 	private String nickname;
-	private String pw;
+	private String password;
 	private String profile;
-	private String image;
+	//private String image;
 	private Date regdate;
-	private List<AuthVO> authList;
+	private String auth;
+	//private List<AuthVO> authList;
 }

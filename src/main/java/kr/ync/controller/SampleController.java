@@ -1,10 +1,16 @@
 package kr.ync.controller;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ync.domain.BoardVO;
 import kr.ync.domain.Criteria;
+import kr.ync.domain.GameDetailsVO;
+import kr.ync.domain.GameListVO;
 import kr.ync.domain.PageDTO;
+import kr.ync.domain.SignupVO;
 import kr.ync.service.BoardService;
+import kr.ync.util.SteamJSONParse;
 import kr.ync.util.UploadUtils;
 import lombok.extern.log4j.Log4j;
 
@@ -52,6 +62,16 @@ public class SampleController {
 		model.addAttribute("gamelist", service.getGameListInDetails());
 	}
 	
+	@GetMapping("gamedetails_new")
+	public void gamedetails_new(@RequestParam("appids") Long appids, Model model) {
+		log.info("gamelistInDetails");
+		log.info("gamedetails");
+		model.addAttribute("gamedetails", service.getGameDetails(appids));
+		model.addAttribute("gamelist", service.getGameListInDetails());
+		SteamJSONParse.steamJSONParse(appids);
+		System.out.println(SteamJSONParse.steamJSONParse(appids));
+	}
+	
 	@GetMapping("newslist")
 	public void newslist(Model model) {
 		log.info("newslist");
@@ -64,13 +84,89 @@ public class SampleController {
 		model.addAttribute("news", service.getNews(content_idx));
 	}
 	
+	@GetMapping("/admin_gameupload")
+	public void admin_gameupload() {
+		
+	}
+	
+	@PostMapping("/admin_gameupload")
+	public String admin_gameupload(MultipartFile[] uploadFile, GameListVO gamelist, RedirectAttributes rttr) {
+		//MultipartFile[]
+//		String imagePath = "resources\\images\\gf_game\\";
+//		int index = 0;
+//		for (MultipartFile multipartFile : uploadFile) {
+//			if(multipartFile.getSize() > 0) {
+//				switch (index) {
+//				case 0:
+//					gamelist.setThumbnail(UploadUtils.uploadFormPost(multipartFile, imagePath));
+//					break;
+//				case 1:
+//					gamelist.setThumbnail(UploadUtils.uploadFormPost(multipartFile, imagePath));
+//					break;
+//				default:
+//					gamelist.setThumbnail(UploadUtils.uploadFormPost(multipartFile, imagePath));
+//					break;
+//				}
+//			}
+//			index++;
+//		}
+		for (MultipartFile multipartFile : uploadFile) {
+			if(multipartFile.getSize() > 0) {
+					gamelist.setThumbnail(UploadUtils.uploadFormPost(multipartFile, uploadPath));
+			}
+		}
+		
+		log.info("register: " + gamelist);
+
+		service.uploadGame(gamelist);
+
+		//rttr.addFlashAttribute("result", gamelist.getBno());
+
+		return "redirect:/front/gamelist";
+	}
+	
+	
+	@PostMapping("/admin_gameremove")
+	public String admin_gameremove(@RequestParam("appids") Long appids, GameListVO gamelist, RedirectAttributes rttr) {
+
+		log.info("remove..." + appids);
+		String path = service.getGameDetails(appids).getThumbnail();
+		System.out.println(path);
+		
+		path = path.replace("../../../resources/upload/", "");
+		System.out.println(path);
+		path = uploadPath.replace("\\", "/") + "/" + path;
+		System.out.println(path);
+		if (service.removeGame(appids)) {
+			File file = new File(path);
+			if(file.exists()) {
+				if (file.delete()) {
+					System.out.println("파일 삭제 성공");
+				} else {
+					System.out.println("파일 삭제 실패");
+				}
+			} else {
+				System.out.println("파일 없음");
+			}
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/front/gamelist";
+	}
+	
+	@GetMapping("/admin_gamemodify")
+	public void admin_gamemodify() {
+		
+	}
+	
+
+	
 	
 //	@GetMapping("/gamelist")
 //	public void gamelist() {
 //		
 //	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("about")
 	public void about() {
 		

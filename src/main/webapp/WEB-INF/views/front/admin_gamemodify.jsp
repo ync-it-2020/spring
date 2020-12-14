@@ -32,54 +32,65 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <%@include file="../front/header.jsp"%>
 <div class="contact-agileinfo">
 	<div class="container">
-		<h2>Sign Up Page</h2>
+		<h2>Game Upload Page</h2>
 		<div class="col-md-4 contact-left-agile">
 			
 		</div>
-		<div class="contact-right-w3" style="display: inline-block;">
-				<div class="agileits_reply">
-					<h3>Create your account</h3>
-					<form role="form" action="/front/signup" method="post" enctype="multipart/form-data">
-						<input type="text" name="member_id" placeholder="ID" required>
-						<input type="text" name="nickname" placeholder="Nickname" required>
-						<input type="password" name="password" placeholder="Password" required>
-						<input type="password" placeholder="Password Check" required>
-						<input type="text" name="name" placeholder="Name" required>
-						<input type="email" name="email" placeholder="Email" required>
-						<textarea name="profile" placeholder="Type your comment..."></textarea>
-						<input type="file" class="hidden_input" id="InputImage" name="file" onchange="readURL(this)"
-						accept="image/jpeg, image/jpg, image/png" />
+		<div class="col-md-4 contact-left-agile" style="display: inline-block;">
+			<div class="agileits_reply">
+					<h3>업로드할 게임명과 ID명을 입력해주세요.</h3>
+					<form role="form" action="/front/admin_gameupload" method="post" enctype="multipart/form-data">
+						<input type="text" name="gametitle" placeholder="Title" required>
+						<input type="text" name="appids" placeholder="ID" required>
+						이미지는 1:1 비율을 권장합니다.<br/>
+						<input type="file" class="hidden_input" id="InputImage" name="uploadFile" onchange="readURL(this)"
+						accept="image/jpeg, image/jpg, image/png" required/>
+						
 						<img src="../../../resources/images/default_image.png" style="border: 2px dotted black" id="thumbnail"/>
 						<button type="submit" class="login_btn">Submit</button>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					</form>
+					<div id="image_container" style="width: 350px; height: auto;"></div>
 					<script>
-						function readURL(input) {
-					    	if (input.files && input.files[0]) {
-					        var reader = new FileReader();
-					        reader.readAsDataURL(input.files[0]);
-					        reader.onload = function (e) {
-					        	var tempImage=new Image();
-					        	tempImage.src=reader.result;
-					        	console.log(tempImage);
-					        	tempImage.onload=function(){
-					        		var canvas=document.createElement('canvas');
-					        		var canvasContext=canvas.getContext("2d");
-					            	var img = new Image();
-						        	img.src = e.target.result;
-					        		canvas.width=img.width*0.5;
-					        		canvas.height=img.height*0.5;
-					        		canvasContext.drawImage(this,0,0,canvas.width,canvas.height);
-					        		var dataURI=canvas.toDataURL("image/png");
-					        		document.querySelector("#thumbnail").src=dataURI;
-					        		}
-					       		};
-					    	}
-						}
+					//이미지 미리보기
+					function readURL(input) {
+				    	if (input.files && input.files[0]) {
+				        var reader = new FileReader();
+				        reader.readAsDataURL(input.files[0]);
+
+				    
+				        reader.onload = function (e) {
+				    
+				        	var tempImage=new Image();
+				        	tempImage.src=reader.result;
+				        	console.log(tempImage);
+				        	tempImage.onload=function(){
+				        		var canvas=document.createElement('canvas');
+				        		var canvasContext=canvas.getContext("2d");
+				        		
+				        		
+				            	var img = new Image();
+					        	img.src = e.target.result;
+					        	
+					        	
+				        		canvas.width=img.width*0.5;
+				        		canvas.height=img.height*0.5;
+				        		
+				        		canvasContext.drawImage(this,0,0,canvas.width,canvas.height);
+				        		
+				        		var dataURI=canvas.toDataURL("image/png");
+				        		
+				        		document.querySelector("#thumbnail").src=dataURI;
+				   
+				        	}
+				        };
+				    
+				    	}
+					}
 				    </script>
-					
+				    <%=request.getRealPath("/") %>
 				</div>
 		</div>
+		
 		<div class="clearfix"></div>
 	</div>
 </div>

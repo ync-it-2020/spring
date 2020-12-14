@@ -12,12 +12,12 @@
 		<collection property="authList" resultMap="authMap">
 		</collection>
 	</resultMap>
-	
+	<!--
 	<resultMap type="kr.ync.domain.AuthVO" id="authMap">
 		<result property="userid" column="userid"/>
 		<result property="auth" column="auth"/>
 	</resultMap>
-
+	-->
 	<!--
 	member_auth table은 사용 하지 않고 AuthVO만 사용한다.
 	tbl_member 의 autho 컬럼 정보만 따로 담아는 객차이다.
@@ -37,26 +37,39 @@
 	</select>
 	
 	<!-- 추가 -->
-	<!--
 	<resultMap type="kr.ync.domain.SignupVO" id="signup">
 		<id property="member_id" column="member_id"/>
 		<result property="name" column="name"/>
 		<result property="email" column="email"/>
 		<result property="nickname" column="nickname"/>
-		<result property="pw" column="pw"/>
+		<result property="password" column="password"/>
 		<result property="profile" column="profile"/>
 		<result property="image" column="image"/>
 		<result property="regdate" column="regdate"/>
-		<collection property="authList" resultMap="authMap">
-		</collection>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	<resultMap type="kr.ync.domain.AuthVO" id="authMap">
+		<result property="member_id" column="member_id"/>
+		<result property="auth" column="auth"/>
 	</resultMap>
 	
-	<insert id="signup" resultMap="signup">
+	<insert id="signup">
 	<![CDATA[
-	INSERT INTO gf_member (member_id, name, email, nickname, pw, profile, image, regdate, auth)
-	VALUES (#{member_id}, #{name}, #{email}, #{nickname}, #{pw}, #{profile}, #{image}, #{regdate}, 'ROLE_USER')
+	INSERT INTO gf_member (member_id, name, email, nickname, password, profile, regdate, auth)
+	VALUES (#{member_id}, #{name}, #{email}, #{nickname}, #{password}, #{profile}, SYSDATE, 'ROLE_USER')
 	]]>
 	</insert>
-	-->
+	
+	<resultMap type="kr.ync.domain.SignupAuthVO" id="signupAuth">
+		<id property="member_id" column="member_id"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	
+	<insert id="signupAuth">
+	<![CDATA[
+	INSERT INTO gf_member_auth (member_id, auth)
+	VALUES (#{member_id}, 'ROLE_USER')
+	]]>
+	</insert>
 
 </mapper>

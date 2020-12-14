@@ -58,6 +58,15 @@
 		]]>
 	</select>
 	
+	<select id="insertGame">
+		insert into gf_game (appids, gametitle, regdate, thumbnail)
+		values (#{appids}, #{gametitle}, SYSDATE, #{thumbnail})
+	</select>
+	
+	<delete id="deleteGame">
+		delete gf_game where appids = #{appids}
+	</delete>
+	
 	
 	
 	

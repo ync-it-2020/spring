@@ -88,8 +88,59 @@ public class MemberTests {
 
 		//String sql = "insert into tbl_member(userid, userpw, username, auth) values (?,?,?,?)";
 
-		String sql = "insert into gf_member (member_id, name, email, nickname, pw, profile, image, regdate, auth)"
+		String sql = "insert into gf_member (member_id, name, email, nickname, password, profile, image, regdate, auth)"
 				+ " values (?,?,?,?,?,?,?,sysdate,?)";
+		String sql_auth = "insert into gf_member_auth (member_id, auth) values (?,?)";
+		
+		for (int i = 0; i < 1; i++) {
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			Connection con_auth = null;
+			PreparedStatement pstmt_auth = null;
+
+
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, "admin002");
+				pstmt.setString(2, "이용헌");
+				pstmt.setString(3, "dlsrks4597@gmail.com");
+				pstmt.setString(4, "어드민");
+				pstmt.setString(5, pwencoder.encode("admin002"));
+				pstmt.setString(6, "어드민 입니다.");
+				pstmt.setString(7, "../../../resources/images/gf_member/profile/admin_profile.jpg");
+				pstmt.setString(8, "ROLE_ADMIN");
+				
+				pstmt.executeUpdate();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (Exception e) {
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+					}
+				}
+
+			}
+		} // end for
+	}
+	
+	@Test
+	public void testInsertAuth_Admin() {
+
+		//String sql = "insert into tbl_member(userid, userpw, username, auth) values (?,?,?,?)";
+
+		String sql = "insert into gf_member_auth (member_id, auth) values (?,?)";
 		
 		for (int i = 0; i < 1; i++) {
 
@@ -101,14 +152,8 @@ public class MemberTests {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(sql);
 				
-				pstmt.setString(1, "admin001");
-				pstmt.setString(2, "김용헌");
-				pstmt.setString(3, "dlsrks4597@gmail.com");
-				pstmt.setString(4, "어드민");
-				pstmt.setString(5, pwencoder.encode("admin001"));
-				pstmt.setString(6, "어드민 입니다.");
-				pstmt.setString(7, "../../../resources/images/gf_member/profile/admin_profile.jpg");
-				pstmt.setString(8, "ROLE_ADMIN");
+				pstmt.setString(1, "admin002");
+				pstmt.setString(2, "ROLE_ADMIN");
 				
 				pstmt.executeUpdate();
 

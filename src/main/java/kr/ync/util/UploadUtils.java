@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,14 +42,28 @@ public class UploadUtils {
 
 		return false;
 	}
+	
+	@PostMapping("/uploadGame")
+	public void uploadGame(MultipartFile[] uploadFile, Model model) {
+		
+		for (MultipartFile multipartFile : uploadFile) {
+			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
+			log.info("Upload File Size: " + multipartFile.getSize());
+		}
+		
+	}
 
 	@PostMapping("/uploadFormAction")
 	public static String uploadFormPost(MultipartFile uploadFile, String realUploadPath) {
 
 		String uploadFolder = realUploadPath;
+		//String uploadFolder = "resources\\images\\gf_game\\";
+		//String uploadFolder = "..\\..\\..\\resource\\images\\";
 		String saveFileName = null; // 서버에 저장되는 file 명
 		String fullSaveName = null; // uploadFolder + saveFileName
 		String savePath = getFolder(); // 날짜별 생성되어진 경로를 포함시킨다. 예) 2020/01/01
+		//savePath = uploadFolder + savePath;
+		System.out.println("savePath : " + savePath);
 		
 		// make folder --------
 		File uploadPath = new File(uploadFolder, getFolder());
@@ -76,27 +91,32 @@ public class UploadUtils {
 				uploadFile.transferTo(saveFile);
 
 				// upload 된 파일이 이미지일 경우 썸네일을 제작
-				if (checkImageType(saveFile)) {
-
-					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + saveFileName));
-
-					// 썸네일 사이즈를 지정해준다. 프로젝트에 따라 썸네일의 크기를 조절해서 사용
-					Thumbnailator.createThumbnail(uploadFile.getInputStream(), thumbnail, 100, 100);
-					thumbnail.close();
-				}
+//				if (checkImageType(saveFile)) {
+//
+//					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + saveFileName));
+//
+//					// 썸네일 사이즈를 지정해준다. 프로젝트에 따라 썸네일의 크기를 조절해서 사용
+//					Thumbnailator.createThumbnail(uploadFile.getInputStream(), thumbnail, 100, 100);
+//					thumbnail.close();
+//				}
 				
 				log.info("uploadFileName : " + uploadFileName);
 				log.info("saveFileName : " + saveFileName);
 				log.info("uploadPath : " + uploadPath);
 				
+				//fullSaveName = savePath.replace("\\", "/") + "/" + saveFileName;
 				fullSaveName = savePath.replace("\\", "/") + "/" + saveFileName;
+//				System.out.println("uploadFileName : " + uploadFileName);
+//				System.out.println("saveFileName : " + saveFileName);
+//				System.out.println("uploadPath : " + uploadPath);
+//				System.out.println("fullSaveName : " + fullSaveName);
 				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} // end catch
 		}
-		return fullSaveName;
+		return "../../../resources/upload/" + fullSaveName;
 	}
 
 }

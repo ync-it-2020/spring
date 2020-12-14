@@ -48,6 +48,7 @@ public class BoardControllerTests {
 				.getModelAndView()
 				.getModelMap());
 	}
+	
 //
 //	@Test
 //	public void testRegister() throws Exception {

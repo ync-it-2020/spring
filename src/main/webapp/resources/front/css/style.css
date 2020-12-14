@@ -1320,7 +1320,7 @@ a.blog-read:hover{
 
 /*-- 추가 --*/
 
-.contact-right-w3 input.login_btn {
+.login_btn {
     float: left;
     padding: 7px 15px;
     margin-right: 5px;
@@ -1330,7 +1330,7 @@ a.blog-read:hover{
 	color:rgb(2, 24, 136);
 }
 
-.contact-right-w3 input.login_btn:hover {
+.login_btn:hover {
 	color: #FFf;
     border: 2px solid #FF166D;
 	background:#FF166D;
@@ -1501,7 +1501,7 @@ color:rgb(2, 24, 136) !important;
 	text-align:left;
 	margin-top:30px;
 }
-.agileits_reply input[type="text"], .agileits_reply input[type="email"] {
+.agileits_reply input[type="text"], .agileits_reply input[type="email"], .agileits_reply input[type="password"] {
     width: 100%;
     padding: 13px;
     border: 1px solid #000;

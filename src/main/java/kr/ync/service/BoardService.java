@@ -8,6 +8,7 @@ import kr.ync.domain.GameDetailsVO;
 import kr.ync.domain.GameListVO;
 import kr.ync.domain.NewsListVO;
 import kr.ync.domain.NewsVO;
+import kr.ync.domain.SignupVO;
 
 public interface BoardService {
 	
@@ -41,6 +42,12 @@ public interface BoardService {
 	public List<NewsListVO> getNewsList();
 	
 	public NewsVO getNews(Long content_idx);
+	
+	public void uploadGame(GameListVO gamelist);
+
+	public boolean removeGame(Long appids);
+
+	
 	
 	
 

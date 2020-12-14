@@ -32,6 +32,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- font -->
 	<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,100,100italic,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	
 	<!-- //font -->
 	<script src="../../../resources/front/js/jquery.min.js"></script>
 	<script src="../../../resources/front/js/bootstrap.js"></script>
@@ -69,7 +70,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li class="hover-effect"><a href="/front/about">About</a></li>
 						<li class="hover-effect"><a href="/front/gamelist">Games</a></li>
 						<li class="hover-effect"><a href="/front/newslist">News</a></li>
-						<li class="hover-effect"><a href="/front/login">Login</a></li>
+						<li class="hover-effect"><a href="/customLogin">Login</a></li>
 					</ul>
 				</div>
 

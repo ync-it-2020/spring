@@ -37,15 +37,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			
 		</div>
 		<div class="contact-right-w3" style="display: inline-block;">
-			<form action="#" method="post">
-				<input type="text" class="text" name="Name" placeholder="ID" required="" style="width: 400px;">
+			<form action="../login" method="post">
+				<input type="text" class="text" name="Name" placeholder="ID" required style="width: 400px;">
 				<br/>
-				<input type="text" class="text" name="Phone" placeholder="Password" required="" style="width: 400px;">
+				<input type="password" class="text" name="Password" placeholder="Password" required style="width: 400px;">
 				<br/>
 				<div style="display: inline-block; padding-right: 5%;">
 					<input type="submit" class="login_btn" value="Login">
 				</div>
-				
+				<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
 			</form>
 			<div style="display: inline-block; padding-right: 5%;">
 				<input type="button" class="login_btn" value="Search PW">

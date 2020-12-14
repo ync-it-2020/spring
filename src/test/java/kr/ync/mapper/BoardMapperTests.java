@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.ync.domain.BoardVO;
 import kr.ync.domain.Criteria;
+import kr.ync.domain.GameListVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -20,6 +21,20 @@ public class BoardMapperTests {
 
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
+	
+	@Test
+	public void testGameInsert() {
+
+		GameListVO gamelist = new GameListVO();
+		gamelist.setGametitle("PLAYERUNKNOWN'S BATTLEGROUNDS");
+		gamelist.setAppids(5780880);
+		gamelist.setThumbnail("../../../resources/images/default_image.png");
+		mapper.insertGame(gamelist);
+
+		log.info(gamelist);
+	}
+	
+	
 
 //	@Test
 //	public void testGetList() {
@@ -112,17 +127,17 @@ public class BoardMapperTests {
 //
 //	}
 	
-	  @Test
-	  public void testSearch() {
-
-	    Criteria cri = new Criteria();
-	    cri.setKeyword("키워드");
-	    cri.setType("TCW");
-
-	    List<BoardVO> list = mapper.getListWithPaging(cri);
-
-	    list.forEach(board -> log.info(board));
-	  }
+//	  @Test
+//	  public void testSearch() {
+//
+//	    Criteria cri = new Criteria();
+//	    cri.setKeyword("키워드");
+//	    cri.setType("TCW");
+//
+//	    List<BoardVO> list = mapper.getListWithPaging(cri);
+//
+//	    list.forEach(board -> log.info(board));
+//	  }
 
 
 }

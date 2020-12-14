@@ -24,18 +24,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="../../../resources/front/css/popup-box.css" rel="stylesheet" type="text/css" media="all" />
 <link href="../../../resources/front/css/style.css" rel="stylesheet" type="text/css" media="all" />
 
-
+<!--  -->
 <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,100,100italic,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="../../../resources/front/js/responsiveslides.min.js"></script>
 <script src="../../../resources/front/js/jquery.min.js"></script>
 <script src="../../../resources/front/js/bootstrap.js"></script>
-<script type="text/javascript" src="../../../resources/front/js/blocksit.js"></script>
 	<script src="../../../resources/front/js/jquery.magnific-popup.js" type="text/javascript"></script>
 <script type="text/javascript" src="../../../resources/front/js/modernizr.custom.53451.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="../../../resources/front/js/blocksit.js"></script>
+<script type="text/javascript" src="../../../resources/front/js/blocksit.min.js"></script>
+<script type="text/javascript" src="https://raw.githubusercontent.com/rnmp/salvattore/master/dist/salvattore.js"></script>
 
 </head>
 <style>
@@ -44,6 +46,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </style>
 <body>
 <%@include file="../front/header.jsp"%>
+	<div class="gallery-w3layouts" id="gallery">
+		<a href="/front/admin_gameupload" class="blog-read" >Upload</a>
+	</div>
 	<!-- 
 	<c:forEach items="${gamelist}" var="gf_game">
 		<tr>
@@ -57,29 +62,50 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</tr>
 	</c:forEach>
 	 -->
+	 
 	<!-- gallery -->
 	<div class="gallery-w3layouts" id="gallery">
 		<div class="container">
-			<h2>Popular Games</h2>
-			<div class="gallery-grids grid" style="width: 130%">
+			<h2>New Games</h2>
+			<div class="grid masonry"style="width: 130%">
 				<c:forEach items="${gamelist}" var="gf_game">
-					<div class="gallery-grid grid-item">
+					<div class="gallery-grid grid-item masonry-item">
 						<a class="book popup-with-zoom-anim button-isi zoomIn animated" data-wow-delay=".5s" onclick="location.href='/front/gamedetails?appids=<c:out value="${gf_game.appids}"/>'" >
 							<img src="${gf_game.thumbnail}" alt=" " class="img-responsive zoom-img"/>
 						</a>
 					</div>
 				</c:forEach>
+				
 				<div class="clearfix"> </div>
+				
 			</div>
 		</div>
 	</div>
+	
+	
 	<!--//gallery -->
 	<script>
-	var msnry = new Masonry( '.grid', {
-		itemSelector: '.grid-item',
-		columnWidth: 20
-		});
+	var i = setInterval(function() {
+		var msnry = new Masonry( '.masonry', {
+			itemSelector: '.masonry-item',
+			columnWidth: 20
+			});
+	}, 1);
+	setTimeout(function() {
+        clearTimeout(i);
+    },50);
+    
+//	for (var i = 0; i < 2; i++) {
+//		var msnry = new Masonry( '.masonry', {
+//			itemSelector: '.masonry-item',
+//			columnWidth: 20
+//			});
+//		}
+
+	
+	
 	</script>
+	
 	
 <!-- gallery -->
 	<div class="gallery-w3layouts" id="gallery">

@@ -20,6 +20,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <%@ page import="org.json.simple.parser.JSONParser" %>
 <%@ page import="java.io.InputStreamReader" %>
 <%@ page import="org.json.simple.parser.ParseException" %>
+<% //response.setHeader("Access-Control-Allow-Origin","*"); %> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +51,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- //font -->
 	<script src="../../../resources/front/js/jquery.min.js"></script>
 	<script src="../../../resources/front/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../../../resources/front/js/jquery.ajax-cross-origin.min.js"></script>
 </head>
 <%! 
 	
@@ -181,6 +183,82 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </style>
 <body>
 	<%@include file="../front/header.jsp"%>
+	<script>
+	function getParam(sname) {
+	    var params = location.search.substr(location.search.indexOf("?") + 1);
+	    var sval = "";
+	    params = params.split("&");
+	    for (var i = 0; i < params.length; i++) {
+	        temp = params[i].split("=");
+	        if ([temp[0]] == sname) { sval = temp[1]; }
+	    }
+	    return sval;
+	}
+	console.log(getParam("appids"));
+	
+	var  requestUrl = "https://store.steampowered.com/api/appdetails?appids=";
+	requestUrl += getParam("appids");
+	requestUrl += "&l=korean";
+	console.log(requestUrl);
+
+	$(document).ready(function(){
+		$.getJSON(requestUrl+"&callback=?", function(data) {
+
+		    alert("successs");
+
+		});
+	    
+	});
+	      
+	function loadData() {
+		alert('1');
+		$.ajax({
+			type: "GET",
+			crossDomain: true,
+			url: requestUrl,
+			dataType: "json",
+			success: function(data){
+				alert("성공");
+			},
+			error: function(xhr, status, error) {
+				alert("에러발생");
+			}
+		});
+	}
+/*
+	$(document).ready(function(){
+		
+		$.ajax({
+			url : requestUrl,
+			//crossDomain: true,
+			dataType:"json",
+			headers: {  
+	            'Access-Control-Allow-Credentials' : true,  
+	            'Access-Control-Allow-Origin': 'http://localhost:2020',  
+	            'Access-Control-Allow-Methods':'GET',  
+	            'Access-Control-Allow-Headers':'application/json',  
+	             },  
+			success:function(data){
+				$.each(data, function(index, item){
+					console.log(item.appids);
+					
+					//var a = $("<b></b><br>").html(item.author.id);
+					//var b = $("<img />").attr("src",item.author.face);
+					//var c = $("<img />").attr("src",item.author.icon);
+					//var d = $("<p></p>").html(item.pubDate);
+					//var e = $("<p></p>").html(item.body);
+					//var f = $("<img />").attr("src",item.media.photoUrl);
+					//$("<div></div>").append(a,b,c,d,e,f).appendTo("#disp");
+					
+				});
+			},
+			error:function(){
+				alert("error");
+			}
+		});
+	});
+	*/
+	</script>
 	<!-- breadcrumbs -->
 	<div class="agileits_breadcrumbs" style="background-color: #1B2738;">
 		<div class="container">
@@ -188,7 +266,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<ul>
 					<li><a href="/">Home</a><i> |</i></li>
 					<li><a href="/front/gamelist">Games</a><i> |</i></li>
-					<li style="color: #fff"><%= name %></li>
+					<li style="color: #fff"><%= name %><i> |</i></li>
+					<li>New</li>
 				</ul>
 			</div>
 			<div class="agileits_breadcrumbs_right">
@@ -205,8 +284,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</form>
 	</div>
 	
+	
 	<!-- single -->
 	<div class="steam_background">
+	<div class="test" style="color: yellow;"></div>
 		<div class="blog">
 			<div class="container">
 				<div class="col-md-7 wthree_blog_left" >

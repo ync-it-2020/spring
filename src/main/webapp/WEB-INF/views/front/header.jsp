@@ -19,14 +19,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--// css -->
 <!-- font -->
 <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,100,100italic,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
-<link href='https//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+
 <!-- //font -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="../../../resources/front/js/responsiveslides.min.js"></script>
 <script src="../../../resources/front/js/jquery.min.js"></script>
 <script src="../../../resources/front/js/bootstrap.js"></script>
 	<script src="../../../resources/front/js/jquery.magnific-popup.js" type="text/javascript"></script>
 <script type="text/javascript" src="../../../resources/front/js/modernizr.custom.53451.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 <body>
 <!-- banner -->
@@ -51,7 +53,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li class="hover-effect"><a href="/front/about">About</a></li>
 						<li class="hover-effect"><a href="/front/gamelist">Games</a></li>
 						<li class="hover-effect"><a href="/front/newslist">News</a></li>
-						<li class="hover-effect"><a href="/front/login">Login</a></li>
+						<li class="hover-effect"><a href="/customLogin">Login</a></li>
 					</ul>
 				</div>
 

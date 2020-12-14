@@ -47,4 +47,10 @@ public interface BoardMapper {
 
 	public List<GameListVO> getGameListInDetails();
 	
+	public void insertGame(GameListVO gamelist);
+
+	//public Integer insertSelectKey(GameListVO gamelist);
+	
+	public int deleteGame(Long appids);
+	
 }

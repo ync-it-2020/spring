@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ync.domain.BoardVO;
 import kr.ync.domain.Criteria;
@@ -11,6 +12,7 @@ import kr.ync.domain.GameDetailsVO;
 import kr.ync.domain.GameListVO;
 import kr.ync.domain.NewsListVO;
 import kr.ync.domain.NewsVO;
+import kr.ync.domain.SignupVO;
 import kr.ync.mapper.BoardMapper;
 import lombok.extern.log4j.Log4j;
 
@@ -53,6 +55,7 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.update(board) == 1;
 	}
 
+
 	@Override
 	public boolean remove(Long bno) {
 
@@ -60,6 +63,7 @@ public class BoardServiceImpl implements BoardService {
 
 		return mapper.delete(bno) == 1;
 	}
+	
 
 	 @Override
 	 public List<BoardVO> getList() {
@@ -125,6 +129,22 @@ public class BoardServiceImpl implements BoardService {
 		
 		 return mapper.getGameListInDetails();
 	}
+
+	@Override
+	public void uploadGame(GameListVO gamelist) {
+
+		log.info("register......" + gamelist);
+
+		mapper.insertGame(gamelist);
+	}
+	
+	@Override
+	public boolean removeGame(Long appids) {
+		log.info("remove...." + appids);
+		return mapper.deleteGame(appids) == 1;
+	}
+	
+	
 	
 	
 }
